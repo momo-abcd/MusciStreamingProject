@@ -70,6 +70,7 @@ public class HttpUtil extends AsyncTask<String, JSONObject, String> {
         ArrayList<MusicList> list = new ArrayList<>();
 
         for(int i=0;i<5;i++){
+
             JSONObject value = values[0].optJSONObject(Integer.toString(i+1));
             list.add(new MusicList(value.optString("elbumImg"),Integer.toString(i+1),value.optString("title"), value.optString("singer")));
         }

@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ArrayList<MusicList> list;
     private TextView asdf;
+    private ImageView elbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         asdf = (TextView) findViewById(R.id.http);
+        elbum = (ImageView) findViewById(R.id.elbumImg);
 //        list = new ArrayList<>();
 //        list.add(new MusicList("asd","1","Butter","방탄소년단"));
 //        list.add(new MusicList("asd","2","헤픈 우연","헤이즈 (Heize)"));
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
             new HttpUtil(recyclerView).execute();
+
 
         }
 
