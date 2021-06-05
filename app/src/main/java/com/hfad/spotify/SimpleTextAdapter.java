@@ -1,6 +1,9 @@
 package com.hfad.spotify;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Holder>  {
@@ -30,6 +37,17 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Ho
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+//        Bitmap imgBitmap = null;
+//        try {
+//            InputStream in = new URL(mData.get(position).getElbumImg()).openStream();
+//            imgBitmap = BitmapFactory.decodeStream(in);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        Log.i("Hellow",mData.get(position).getElbumImg());
+//        holder.elbumImg.setImageBitmap(imgBitmap);
         holder.singerNameText.setText(mData.get(position).getSingerName());
         holder.musicNameText.setText(mData.get(position).getMusicName());
         holder.rankText.setText(mData.get(position).getRank());

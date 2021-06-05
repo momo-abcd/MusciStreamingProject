@@ -1,9 +1,14 @@
 package com.hfad.spotify;
 
 import android.content.ContentValues;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,15 +18,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InterfaceAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class HttpUtil extends AsyncTask<String, JSONObject, String> {
-    private TextView asdf;
+    private RecyclerView recyclerView;
     private JSONObject resJson = null;
-    public HttpUtil(TextView asdf) {
+    public HttpUtil(RecyclerView recyclerView) {
         super();
-        this.asdf = asdf;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -60,9 +67,16 @@ public class HttpUtil extends AsyncTask<String, JSONObject, String> {
 
     @Override
     protected void onProgressUpdate(JSONObject... values) {
-        Log.i("myData1123",""+values[0]);
-        String a = values[0].optString("1");
-        Log.i("myData1124",a);
-//        asdf.setText(values[0]);
+        ArrayList<MusicList> list = new ArrayList<>();
+
+        for(int i=0;i<5;i++){
+            JSONObject value = values[0].optJSONObject(Integer.toString(i+1));
+            list.add(new MusicList(value.optString("elbumImg"),Integer.toString(i+1),value.optString("title"), value.optString("singer")));
+        }
+         SimpleTextAdapter adapter = new SimpleTextAdapter(list);
+        recyclerView.setAdapter(adapter);
+
+        Log.i("myData1123",""+values[0].getClass().getName());
+        Log.i("myData1125",""+values[0].optJSONObject("1").getClass().getName());
     }
 }
