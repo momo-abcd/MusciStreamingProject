@@ -56,6 +56,7 @@
         </LinearLayout>
     </LinearLayout>
     <ImageButton
+        android:id="@+id/playBtn"
         android:layout_gravity="end"
         android:layout_marginTop="5dp"
     android:background="@android:color/transparent"
