@@ -5,12 +5,14 @@ public class MusicList {
     private String rank;
     private String musicName;
     private String singerName;
+    private String uuid;
 
-    public MusicList(String elbumIng, String rank, String musicName, String singerName) {
+    public MusicList(String elbumIng, String rank, String musicName, String singerName, String uuid) {
         this.elbumImg = elbumIng;
         this.rank = rank;
         this.musicName = musicName;
         this.singerName = singerName;
+        this.uuid = uuid;
     }
 
     public String getElbumImg() {
@@ -27,5 +29,8 @@ public class MusicList {
 
     public String getSingerName() {
         return singerName;
+    }
+    public String getUuid() {
+        return uuid;
     }
 }

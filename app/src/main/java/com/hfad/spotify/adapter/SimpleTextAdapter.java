@@ -1,7 +1,9 @@
-package com.hfad.spotify;
+package com.hfad.spotify.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 
+import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.hfad.spotify.activity.MainActivity;
+import com.hfad.spotify.MusicList;
+import com.hfad.spotify.R;
 
 import java.util.ArrayList;
 
 public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Holder>  {
     private ArrayList<MusicList> mData = null;
 
-    SimpleTextAdapter(ArrayList<MusicList> list) {
+    public SimpleTextAdapter(ArrayList<MusicList> list) {
         this.mData = list;
     }
 
@@ -63,6 +68,36 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Ho
             musicNameText = itemView.findViewById(R.id.musicNameText);
             singerNameText = itemView.findViewById(R.id.singerNameText);
             this.context = context;
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int pos = getAdapterPosition();
+//                    if (pos != RecyclerView.NO_POSITION){
+//                        MusicList item = mData.get(pos);
+//                        Log.i("myData9509", item.getUuid()+"");
+//                        Log.i("myData9510", v+"");
+//                        Log.i("myData9511", item+"");
+//                    }
+//
+//                }
+//            });
+            itemView.findViewById(R.id.playBtn).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+                        MusicList item = mData.get(pos);
+                        ContentValues values = new ContentValues();
+                        values.put("uuid", item.getUuid());
+                        values.put("name", item.getMusicName());
+                        values.put("aritst", item.getSingerName());
+                        MainActivity.sql.insert("currentPlaylist",null,values);
+                        Cursor c = MainActivity.sql.query("currentPlaylist",null,null,null,null,null,null,null);
+                        Log.i("myData9509", item.getUuid()+"");
+                    }
+                }
+            });
         }
     }
 }

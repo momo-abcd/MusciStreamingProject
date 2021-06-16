@@ -1,14 +1,11 @@
 package com.hfad.spotify;
 
-import android.content.ContentValues;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import com.hfad.spotify.adapter.SimpleTextAdapter;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.InterfaceAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -72,7 +68,8 @@ public class HttpUtil extends AsyncTask<String, JSONObject, String> {
         for(int i=0;i<5;i++){
 
             JSONObject value = values[0].optJSONObject(Integer.toString(i+1));
-            list.add(new MusicList(value.optString("elbumImg"),Integer.toString(i+1),value.optString("title"), value.optString("singer")));
+            list.add(new MusicList(value.optString("elbumImg"),Integer.toString(i+1),value.optString("title"), value.optString("singer")
+            ,value.optString("uuid")));
         }
          SimpleTextAdapter adapter = new SimpleTextAdapter(list);
         recyclerView.setAdapter(adapter);
