@@ -7,8 +7,8 @@ public class MusicList {
     private String singerName;
     private String uuid;
 
-    public MusicList(String elbumIng, String rank, String musicName, String singerName, String uuid) {
-        this.elbumImg = elbumIng;
+    public MusicList(String elbumImg, String rank, String musicName, String singerName, String uuid) {
+        this.elbumImg = elbumImg;
         this.rank = rank;
         this.musicName = musicName;
         this.singerName = singerName;

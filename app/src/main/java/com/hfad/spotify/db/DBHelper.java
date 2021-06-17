@@ -3,6 +3,7 @@ package com.hfad.spotify.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -21,9 +22,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE if exists mytable";
+//        String sql = "DROP TABLE if exists currentPlaylist";
 
-        db.execSQL(sql);
-        onCreate(db);
+        if(newVersion > oldVersion) {
+
+            db.execSQL("ALTER TABLE currentPlaylist ADD COLUMN imgUrl text");
+            onCreate(db);
+        }
     }
 }

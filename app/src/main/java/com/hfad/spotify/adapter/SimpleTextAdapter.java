@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,6 +50,34 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Ho
         holder.singerNameText.setText(mData.get(position).getSingerName());
         holder.musicNameText.setText(mData.get(position).getMusicName());
         holder.rankText.setText(mData.get(position).getRank());
+        holder.playBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                MainActivity.sql.execSQL("DELETE FROM currentPlaylist");
+                MainActivity.sql.execSQL("INSERT INTO currentPlaylist VALUES("
+                        +"'" + mData.get(position).getUuid() + "',"
+                        +"'" + mData.get(position).getMusicName() + "',"
+                        +"'" + mData.get(position).getSingerName() + "',"
+                        +"'" + mData.get(position).getElbumImg() + "'"
+                        + ");");
+
+                Cursor cursor = MainActivity.sql.rawQuery("SELECT * FROM currentPlaylist",null);
+                Log.i("myData774",""+cursor);
+
+                if(cursor.getCount() !=0) {
+                    while(cursor.moveToNext()) {
+                        String uuid = cursor.getString(cursor.getColumnIndex("uuid"));
+                        String musicName = cursor.getString(cursor.getColumnIndex("name"));
+                        String artist = cursor.getString(cursor.getColumnIndex("artist"));
+                        String url = cursor.getString(cursor.getColumnIndex("imgUrl"));
+                        Log.i("myData771",uuid);
+                        Log.i("myData772",musicName);
+                        Log.i("myData773",artist);
+                        Log.i("myData774",url);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -60,6 +90,7 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Ho
         TextView rankText;
         TextView musicNameText;
         TextView singerNameText;
+        ImageButton playBtn;
         Context context;
         public Holder(View itemView,Context context) {
             super(itemView);
@@ -67,6 +98,7 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Ho
             rankText = itemView.findViewById(R.id.rankText);
             musicNameText = itemView.findViewById(R.id.musicNameText);
             singerNameText = itemView.findViewById(R.id.singerNameText);
+            playBtn = itemView.findViewById(R.id.playBtn);
             this.context = context;
 
 //            itemView.setOnClickListener(new View.OnClickListener() {
